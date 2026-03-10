@@ -1,0 +1,8 @@
+{
+  "budget_decision": "allow",
+  "trust_gate_decision": "allow",
+  "notes": [
+    "Budget window remained within configured limits.",
+    "No trust-boundary escalation was required."
+  ]
+}
