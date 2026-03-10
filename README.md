@@ -5,6 +5,12 @@ Compact post-run execution receipts for LangChain agents on LangGraph.
 Part of the Agent Runtime Safety Kit.  
 This repo shows a thin adapter pattern for emitting a compact execution receipt after a LangChain agent run.
 
+## Positioning
+
+This is a compact receipt emitter example.
+It sits after the run in a small runtime control chain.
+It is not a full observability suite.
+
 ## What this is
 
 - A docs-first and minimal runnable adapter repo.
@@ -47,6 +53,7 @@ pytest
 - [Run State Example](examples/inputs/run-state.example.json)
 - [Policy Signals Example](examples/inputs/policy-signals.example.json)
 - [Receipt Example](examples/results/receipt.example.json)
+- [Runtime Control Chain Overview](https://github.com/joy7758/token-governor/blob/main/docs/outreach/runtime-control-chain-overview.md)
 
 ## Receipt Shape
 
