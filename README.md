@@ -1,72 +1,56 @@
-# ARO Audit LangChain Receipt
+# aro-audit-langchain-receipt
 
-Compact post-run execution receipts for LangChain agents on LangGraph.
+Thin adapter and integration surface for [aro-audit](https://github.com/joy7758/aro-audit).
 
-Part of the Agent Runtime Safety Kit.  
-This repo shows a thin adapter pattern for emitting a compact execution receipt after a LangChain agent run.
+## Role
 
-## Positioning
+This repo packages a small LangChain-oriented receipt emitter that sits downstream of runtime execution. It exists to show integration glue for compact post-run receipts, not to replace the canonical ARO Audit control plane.
 
-This is a compact receipt emitter example.
-It sits after the run in a small runtime control chain.
-It is not a full observability suite.
+## Canonical home
 
-## What this is
+The canonical audit implementation lives in `aro-audit`, especially:
 
-- A docs-first and minimal runnable adapter repo.
-- A compact receipt builder for local run-state dictionaries.
-- A thin adapter that emits a post-run receipt after agent execution.
-- A small example that composes with budget-window and trust-gate adapters.
+- `aro-audit/aro_audit/`
+- `aro-audit/docs/boundaries.md`
+- `aro-audit/docs/receipts-vs-events.md`
+- `aro-audit/examples/receipts/`
 
-## What this is not
+## Not this repo
 
-- Not a full observability platform.
-- Not an official LangChain or LangGraph extension.
-- Not a complete compliance system.
-- Not a claim that receipts alone provide full governance coverage.
+- not the canonical audit implementation
+- not the evidence capture substrate
+- not the architecture hub
+- not the benchmark suite
 
-## Quickstart
+## Minimal usage
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install -U pip
 python -m pip install -e ".[test]"
+pytest
+```
 
-python - <<'PY'
+```python
 import json
 from pathlib import Path
+
 from aro_audit_langchain_receipt.receipt import build_receipt
 
 run_state = json.loads(Path("examples/inputs/run-state.example.json").read_text())
 policy_signals = json.loads(Path("examples/inputs/policy-signals.example.json").read_text())
 print(build_receipt(run_state, policy_signals))
-PY
-
-pytest
 ```
 
-## Demo Assets
+For bounded review, receipt semantics, and verification workflows, start from `aro-audit`.
 
-- [Demo](docs/demo.md)
-- [Integration Pattern](docs/integration-pattern.md)
-- [Run State Example](examples/inputs/run-state.example.json)
-- [Policy Signals Example](examples/inputs/policy-signals.example.json)
-- [Receipt Example](examples/results/receipt.example.json)
-- [Runtime Control Chain Overview](https://github.com/joy7758/token-governor/blob/main/docs/outreach/runtime-control-chain-overview.md)
+## Status
 
-## Receipt Shape
+- thin adapter
+- canonical home is `aro-audit`
+- kept as a minimal LangChain receipt example
 
-- `build_receipt(run_state, policy_signals)` emits a compact receipt dictionary.
-- Missing fields fall back to safe defaults.
-- The adapter layer simply wraps the builder and returns the same receipt shape.
+## Notes
 
-This is a thin adapter example, not an official LangChain extension.
-
-## Related Projects
-
-- [ARO Audit](https://github.com/joy7758/aro-audit)
-- [Token Governor](https://github.com/joy7758/token-governor)
-- [God Spear](https://github.com/joy7758/god-spear)
-- [Token Governor LangChain Middleware](https://github.com/joy7758/token-governor-langchain-middleware)
-- [God Spear MCP Gate](https://github.com/joy7758/god-spear-mcp-gate)
+- This repo keeps the adapter surface narrow on purpose.
+- Audit verification, conformance, and control-plane logic should evolve in `aro-audit` first.
